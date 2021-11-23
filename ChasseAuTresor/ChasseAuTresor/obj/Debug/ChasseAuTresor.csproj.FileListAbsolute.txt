@@ -1,0 +1,7 @@
+H:\Work\Informatique\Projet\ChasseAuTresor\ChasseAuTresor\bin\Debug\ChasseAuTresor.exe.config
+H:\Work\Informatique\Projet\ChasseAuTresor\ChasseAuTresor\bin\Debug\ChasseAuTresor.exe
+H:\Work\Informatique\Projet\ChasseAuTresor\ChasseAuTresor\bin\Debug\ChasseAuTresor.pdb
+H:\Work\Informatique\Projet\ChasseAuTresor\ChasseAuTresor\obj\Debug\ChasseAuTresor.csproj.AssemblyReference.cache
+H:\Work\Informatique\Projet\ChasseAuTresor\ChasseAuTresor\obj\Debug\ChasseAuTresor.csproj.CoreCompileInputs.cache
+H:\Work\Informatique\Projet\ChasseAuTresor\ChasseAuTresor\obj\Debug\ChasseAuTresor.exe
+H:\Work\Informatique\Projet\ChasseAuTresor\ChasseAuTresor\obj\Debug\ChasseAuTresor.pdb
