@@ -3,3 +3,6 @@
 Penser à vérifier lors du placement des trésors qu'y ait pas une mine déjà à cet endroit, et inversement dans le ss prog du placement des mines.
 
 Je pense qu'il faudrait que la fonction EstPerdue renvoie un booleen selon si la partie est perdue ou non.
+
+
+Idée : faire jouer le premier coup dans Main, et après appeler la fonction Jouer sans les lignes et colonnes, qui seront choisies dans ce sous prog justement, ça sera plus simple quand on veut le rappeler à chaque fois
