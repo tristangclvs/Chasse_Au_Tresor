@@ -22,6 +22,8 @@ namespace ChasseAuTresor
             
             Console.Write("Choisissez le numéro de colonne : ");
             int colonne = int.Parse(Console.ReadLine());
+            
+            //int compteurCoups = 0;
 
             int[,] positionsMines = PlacerMines(grille);
             int[,] positionsTresors = PlacerTresors(grille, positionsMines);
@@ -62,9 +64,15 @@ namespace ChasseAuTresor
             {
                 for (int j = 0; j < tab.GetLength(1); j++)
                 {
+            //        Console.Write(" ");
+            //        Console.BackgroundColor = ConsoleColor.White;
                     Console.Write(tab[i, j]);
+            //        Console.BackgroundColor = ConsoleColor.Black;
+            //        Console.Write(" ");
+
                 }
                 Console.WriteLine();
+            //    Console.WriteLine();
             }
 
         }
@@ -101,6 +109,7 @@ namespace ChasseAuTresor
                 positionsMines[i, 0] = rng.Next(0, grille.GetLength(0) + 1); // coordonnées x des mines
                 positionsMines[i, 1] = rng.Next(0, grille.GetLength(1) + 1); // coordonnées y des mines
             }
+
             return positionsMines;
         }
         static int[,] PlacerTresors(string[,] grille, int[,] positionsMines)
@@ -145,26 +154,33 @@ namespace ChasseAuTresor
 
 
 
-
+            bool lost = false;
             bool win = EstGagnee(positionsMines, grille);
             if (win == false)
             {
-                EstPerdue(ligne, colonne, grille, positionsMines);
+               lost = EstPerdue(ligne, colonne, grille, positionsMines);
             }
-
+            if (lost == true)
+            {
+                Console.WriteLine("💣 BOUMMM 💣 \nTu es mort ☠ !!!");// Si on a le temps récapitulaif de partie : nb de coups et nb de trésors gagnés
+            }
+            else { Jouer(ligne, colonne, grille, positionsMines); }
 
         }
-        static void EstPerdue(int ligne, int colonne, string[,] grille, int[,] positionsMines)
+        static bool EstPerdue(int ligne, int colonne, string[,] grille, int[,] positionsMines)
         // Détecte si le joueur a touché une mine et arrête la partie ou continue la partie sinon
         {
+            bool lost = false;
             for (int i = 0; i < positionsMines.GetLength(0); i++)
             {
                 if (positionsMines[i, 0] == ligne && positionsMines[i, 1] == colonne)
                 {
-                    Console.WriteLine("💣 BOUMMM 💣 \nTu es mort ☠ !!!"); // Si on a le temps récapitulaif de partie : nb de coups et nb de trésors gagnés
+                    lost = true;
+                    //Console.WriteLine("💣 BOUMMM 💣 \nTu es mort ☠ !!!"); // Si on a le temps récapitulaif de partie : nb de coups et nb de trésors gagnés
                 }
-                else { Jouer(grille); }
+                //else { Jouer(ligne, colonne, grille, positionsMines); }
             }
+            return lost;
         }
 
         static bool EstGagnee( int[,] positionsMines, string[,] grille)
