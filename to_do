@@ -6,3 +6,5 @@ Je pense qu'il faudrait que la fonction EstPerdue renvoie un booleen selon si la
 
 
 Idée : faire jouer le premier coup dans Main, et après appeler la fonction Jouer sans les lignes et colonnes, qui seront choisies dans ce sous prog justement, ça sera plus simple quand on veut le rappeler à chaque fois
+
+Mettre le gros pâté de Jouer() dans un sous programme et trouver comment le faire redémarrer à chaque case libérée et ainsi de suite
