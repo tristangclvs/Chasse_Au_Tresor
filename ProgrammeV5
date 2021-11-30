@@ -189,11 +189,10 @@ namespace ChasseAuTresor
 
 
         // =================================================
+
         static void Jouer(string[,] grille, int[,] positionsMines, int[,] positionsTresors, ref int compteurTours, int ligne, int colonne, int[,] verification)
         // Demande au joueur de jouer un coup et le joue
-        { // Penser à faire ligne -1 et colonne -1 pour la position du coup.
-
-
+        { 
             compteurTours += 1;
 
             bool lost = EstPerdue(ligne, colonne, grille, positionsMines); ;
@@ -213,11 +212,7 @@ namespace ChasseAuTresor
                 else
                 {
                     //Instruction du jeu
-                    //penser a rajouter checkentourage + modifier les chiffres dès qu'il trouve un trésor
-
                     RecursiviteV2(grille, positionsMines, positionsTresors, ref compteurTours, ligne, colonne, verification);
-
-
                     AfficherGrille(grille);
 
                     //AFFICHAGE MINES ET TRESORS
