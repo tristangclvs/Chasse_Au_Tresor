@@ -1,12 +1,5 @@
 # TO DO
 
-Penser à vérifier lors du placement des trésors qu'y ait pas une mine déjà à cet endroit, et inversement dans le ss prog du placement des mines.
-
-Je pense qu'il faudrait que la fonction EstPerdue renvoie un booleen selon si la partie est perdue ou non.
-
-
-Idée : faire jouer le premier coup dans Main, et après appeler la fonction Jouer sans les lignes et colonnes, qui seront choisies dans ce sous prog justement, ça sera plus simple quand on veut le rappeler à chaque fois
-
-Mettre le gros pâté de Jouer() dans un sous programme et trouver comment le faire redémarrer à chaque case libérée et ainsi de suite
-
-Pour éviter le stack overflow peut être qu'il faut créer une grille des cases déjà vérifiées, afin d'éviter que des cases soient vérifiées plusieurs fois.
+A faire: utiliser le compteur de tours
+Initialiser une demande de relance en fin de partie
+Faire un tableau propre, et définir des cases mines = rouges par exemple
