@@ -3,3 +3,6 @@
 A faire: utiliser le compteur de tours
 Initialiser une demande de relance en fin de partie
 Faire un tableau propre, et définir des cases mines = rouges par exemple
+
+
+Si on trouve un trésor mettre un T avec une case en verte + recalcul des 8 cases autour de ce trésor (CherckerEntourage)
