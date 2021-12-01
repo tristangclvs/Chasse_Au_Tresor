@@ -193,12 +193,14 @@ namespace ChasseAuTresor
         {
             compteurTours += 1;
 
-            bool lost = EstPerdue(ligne, colonne, grille, positionsMines); ;
+            bool lost = EstPerdue(ligne, colonne, grille, positionsMines);
             bool win = EstGagnee(positionsMines, grille);
+            // Récupère des indicateurs de partie [Gagnée/Perdue]
             if (lost == true)
             {
                 Console.WriteLine();
                 Console.WriteLine(" BOUMMM  \nTu es mort !!!");// Si on a le temps récapitulaif de partie : nb de coups et nb de trésors gagnés
+                // La partie est finie car la bombe a explosé 
             }
             else
             {
@@ -206,6 +208,7 @@ namespace ChasseAuTresor
                 {
                     Console.WriteLine();
                     Console.WriteLine("  HOURRA  ! Tu as gagné petit pirate ! ");
+                    // La partie est finie car tu as récupéré tous les trésors et découvert toutes les cases ne comportant pas de mines
                 }
                 else
                 {
@@ -222,6 +225,7 @@ namespace ChasseAuTresor
 
                     if (win == false && lost == false)
                     {
+                        //Relancez le jeu tant que la partie n'est pas finie
                         Console.WriteLine("Jouer un nouveau coup : ");
                         Console.Write("Choisissez une ligne : ");
                         ligne = int.Parse(Console.ReadLine()) - 1;
@@ -237,6 +241,7 @@ namespace ChasseAuTresor
 
         static void Recursivite(string[,] grille, int[,] positionsMines, int[,] positionsTresors, ref int compteurTours, int ligne, int colonne, int[,] verification)
         {
+            // Fonction récursive qui rélève les cases non indicées, sinon indique le numéro calculée sur la case
             if (verification[ligne, colonne] != 0) //case decouverte
             {
 
@@ -246,12 +251,12 @@ namespace ChasseAuTresor
                 verification[ligne, colonne] = 1;
                 if (CheckerEntourage(ligne, colonne, positionsMines, positionsTresors, grille) == 0)
                 {
-                    //Console.WriteLine(grille[ligne, colonne]);
-
+                    //On parcourt les 8 cases autour de la case jouer récursivement
                     int indiceLigneDep = ligne - 1;
                     int indiceLigneFin = ligne + 1;
                     int indiceColonneDep = colonne - 1;
                     int indiceColonneFin = colonne + 1;
+                    // Vérification des IndexOutOfRange, sur les bords
                     if (ligne == 0)
                     {
                         indiceLigneDep += 1;
@@ -290,7 +295,7 @@ namespace ChasseAuTresor
                             else
                             {
                                 int compteur = (CheckerEntourage(i, j, positionsMines, positionsTresors, grille));
-                                grille[i, j] = " " + compteur + " ";
+                                grille[i, j] = " " + compteur + " "; // Affiche le numéro calculée sur la case si il y a des trésor ou mines autour
                                 verification[i, j] = 1;
                             }
                         }
@@ -301,6 +306,7 @@ namespace ChasseAuTresor
                 }
                 else
                 {
+                    // Si il y a un item autour, afficher le numéro calculée directement sur la case
                     grille[ligne, colonne] = "  " + CheckerEntourage(ligne, colonne, positionsMines, positionsTresors, grille) + " ";
                     verification[ligne, colonne] = 1;
                 }
@@ -325,7 +331,7 @@ namespace ChasseAuTresor
         }
 
 
-
+        // A VERIFIER, PAS SUR
         static bool EstGagnee(int[,] positionsMines, string[,] grille)
         // Détecte si le joueur a gagné et arrête la partie
         {
@@ -334,6 +340,7 @@ namespace ChasseAuTresor
             {
                 for (int j = 0; j < grille.GetLength(1); j++)
                 {
+                    // Si toutes les cases restantes non définies sont des mines, alors la partie est gagnée
                     if (grille[i, j] == " ND " && CheckerPositions(i, j, positionsMines) == false)
                     {
                         return win;
