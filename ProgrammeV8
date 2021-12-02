@@ -10,9 +10,10 @@ namespace ChasseAuTresor
     {
         static void Main(string[] args)
         {
+            int compteurTours = 0;
             string[,] grille = Initialiser(); //initialise la grille de jeu
             int[,] verification = InitialiserVerif(grille); //Initialise une grille utile à la fonction Recursivité (case déjà vérifiée)
-            int compteurTours = 0;
+            
             int ligne;
             int colonne;
 
@@ -50,7 +51,7 @@ namespace ChasseAuTresor
                 }
             }
             Console.WriteLine();
-            AfficherGrille(grille); // demande affichage de la grille
+            AfficherGrille(grille, 0); // demande affichage de la grille
             return grille;
         }
 
@@ -73,7 +74,7 @@ namespace ChasseAuTresor
 
 
 
-        static void AfficherGrille(string[,] tab)
+        static void AfficherGrille(string[,] tab, int compteurTours)
         //Affiche la grille de jeu
         {
             Console.Write("      1");
@@ -163,7 +164,7 @@ namespace ChasseAuTresor
                 Console.WriteLine();
                 Console.WriteLine();
             }
-
+            Console.WriteLine($"Tour n°{compteurTours+1}");
         }
 
 
@@ -282,7 +283,7 @@ namespace ChasseAuTresor
                 {
                     //Instruction du jeu
                     Recursivite(grille, positionsMines, positionsTresors, ref compteurTours, ligne, colonne, verification);
-                    AfficherGrille(grille);
+                    AfficherGrille(grille, compteurTours);
 
                     //AFFICHAGE MINES ET TRESORS
                     Console.WriteLine("mines :");
