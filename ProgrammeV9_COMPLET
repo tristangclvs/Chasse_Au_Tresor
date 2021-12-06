@@ -172,9 +172,9 @@ namespace ChasseAuTresor
         static int[,] PlacerMines(int ligne, int colonne, string[,] grille, Random rng)
         // Place les mines 
         {
-            
-            int nbMines = rng.Next(grille.GetLength(0) / 2, grille.GetLength(0) * grille.GetLength(1) / 2 + 1); // + 1 car on veut la moitié pile du tableau et pas la moitié - 1
-            //int nbMines = 2;
+
+            //int nbMines = rng.Next(grille.GetLength(0) / 2, grille.GetLength(0) * grille.GetLength(1) / 2 + 1); // + 1 car on veut la moitié pile du tableau et pas la moitié - 1
+            int nbMines = 2;
             int[,] positionsMines = new int[nbMines, 2];
             /* matrice des positions des mines 
              * |x1,y1| 1ere mine
@@ -210,7 +210,7 @@ namespace ChasseAuTresor
         // Place les trésors
         {
             bool test = false;
-            
+
             int nbTresors = rng.Next(1, 4); // Entre 1 et 3 trésors
             int[,] positionsTresors = new int[nbTresors, 2];
             /* matrice des positions des trésors 
@@ -240,9 +240,9 @@ namespace ChasseAuTresor
                         }
                         else
                         {
-                            for (int o = 0; o < positionsTresors.GetLength(0); o++) // si ce n'est pas un trésor déjà existant on rentre
+                            for (int o = 0; o < positionsTresors.GetLength(0); o++) //parcourt les positions des trésors
                             {
-                                if (x == positionsTresors[o, 0] && y == positionsTresors[o, 1])
+                                if (x == positionsTresors[o, 0] && y == positionsTresors[o, 1]) // si ce n'est pas un trésor déjà existant on rentre
                                 {
                                     test = false;
                                 }
@@ -302,12 +302,6 @@ namespace ChasseAuTresor
                         //Instruction du jeu
                         AfficherGrille(grille);
                         Console.WriteLine($"Tour n°{compteurTours}");
-
-                        //AFFICHAGE MINES ET TRESORS
-                        Console.WriteLine("mines :");
-                        AfficherGrilleItems(positionsMines);
-                        Console.WriteLine("tresors :");
-                        AfficherGrilleItems(positionsTresors);
 
                         //Relancez le jeu tant que la partie n'est pas finie
                         Jouer(grille, positionsMines, positionsTresors, ref compteurTours, ligne, colonne, verification);
@@ -435,6 +429,8 @@ namespace ChasseAuTresor
                 }
             }
             win = true;
+            Console.Clear();
+            AfficherGrille(grille);
             return win;
         }
 
@@ -496,22 +492,6 @@ namespace ChasseAuTresor
                 }
             }
             return compteur;
-        }
-
-        // ================================ FONCTIONS POUR TESTS ===============================
-
-        static void AfficherGrilleItems(int[,] tab)
-        //Affiche les coordonées des items
-        {
-            for (int i = 0; i < tab.GetLength(0); i++)
-            {
-                for (int j = 0; j < tab.GetLength(1); j++)
-                {
-                    Console.Write(tab[i, j]);
-                }
-                Console.WriteLine();
-                Console.WriteLine();
-            }
         }
     }
 }
