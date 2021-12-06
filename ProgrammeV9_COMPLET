@@ -32,7 +32,7 @@ namespace ChasseAuTresor
             Console.ReadLine();
         }
 
-        //Sous programmes --------------------------------------------------------------------------------------
+        // Sous programmes --------------------------------------------------------------------------------------
 
         static string[,] Initialiser()
         /* Demande taille du plateau au joueur 
@@ -164,11 +164,10 @@ namespace ChasseAuTresor
                 Console.WriteLine();
                 Console.WriteLine();
             }
-
         }
 
 
-        // =================================================
+
         static int[,] PlacerMines(int ligne, int colonne, string[,] grille, Random rng)
         // Place les mines 
         {
@@ -256,7 +255,8 @@ namespace ChasseAuTresor
             }
             return positionsTresors;
         }
-        // =================================================
+
+
 
         static void Jouer(string[,] grille, int[,] positionsMines, int[,] positionsTresors, ref int compteurTours, int ligne, int colonne, int[,] verification)
         // Demande au joueur de jouer un coup et le joue
@@ -314,8 +314,7 @@ namespace ChasseAuTresor
 
         static void Recursivite(string[,] grille, int[,] positionsMines, int[,] positionsTresors, ref int compteurTours, int ligne, int colonne, int[,] verification)
         {
-            // Fonction récursive qui rélève les cases non indicées, sinon indique le numéro calculée sur la case
-
+            // Fonction récursive qui révèle les cases non indicées, sinon indique le numéro calculée sur la case
             if (verification[ligne, colonne] == 0) //case non decouverte
             {
                 verification[ligne, colonne] = 1;
@@ -412,7 +411,7 @@ namespace ChasseAuTresor
         }
 
 
-        // A VERIFIER, PAS SUR
+        
         static bool EstGagnee(int[,] positionsMines, string[,] grille, int compteurTours)
         // Détecte si le joueur a gagné et arrête la partie
         {
