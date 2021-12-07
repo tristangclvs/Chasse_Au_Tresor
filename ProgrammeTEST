@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChasseAuTresor
 {
-  
+
 
     class Program
     {
@@ -22,7 +22,7 @@ namespace ChasseAuTresor
 
         // Sous programmes --------------------------------------------------------------------------------------
         static void Run()
-            // Sert de fonction Main pouvant être appelée pour recommencer.
+        // Sert de fonction Main pouvant être appelée pour recommencer.
         {
             int compteurTours = 1;
             string[,] grille = Initialiser(); //initialise la grille de jeu
@@ -34,7 +34,7 @@ namespace ChasseAuTresor
 
             do
             {
-                Console.WriteLine();Console.Write("Choisissez le numéro de ligne : ");
+                Console.WriteLine(); Console.Write("Choisissez le numéro de ligne : ");
                 string ans = Console.ReadLine();
                 GererMissClick(ref ans, "ligne");
 
@@ -52,33 +52,32 @@ namespace ChasseAuTresor
             Jouer(grille, positionsMines, positionsTresors, ref compteurTours, ligne, colonne, verification); // La chasse au trésor commence avec les coordonnées indiquées
 
         }
-        static bool GererMissClick(ref string ans, string rangee )
+        static bool GererMissClick(ref string ans, string rangee)
         {
             bool test = false;
-            while (test == false)
+
+            int i = 0;
+            while (i < ans.Length)
             {
-                int i = 0;
-                while (i < ans.Length)
+                if (dico.Contains(ans[i]) == false && rangee == "ligne")
                 {
-                    if (dico.Contains(ans[i]) == false && rangee=="ligne")
-                    {
-                        Console.WriteLine(); Console.Write("Choisissez le numéro de ligne : ");
-                        ans = Console.ReadLine();
-                        i = 0;
-                    }
-                    else
-                    {
-                        if(dico.Contains(ans[i]) == false && rangee == "colonne")
-                        {
-                            Console.WriteLine(); Console.Write("Choisissez le numéro de colonne : ");
-                            ans = Console.ReadLine();
-                            i = 0;
-                        }
-                    }
-                    i++;
+                    Console.WriteLine(); Console.Write("Choisissez le numéro de ligne : ");
+                    ans = Console.ReadLine();
+                    i = -1;
                 }
-                test = true;
+                else
+                {
+                    if (dico.Contains(ans[i]) == false && rangee == "colonne")
+                    {
+                        Console.WriteLine(); Console.Write("Choisissez le numéro de colonne : ");
+                        ans = Console.ReadLine();
+                        i = -1;
+                    }
+                }
+                i++;
             }
+            test = true;
+
             return test;
         }
         static string[,] Initialiser()
@@ -220,7 +219,7 @@ namespace ChasseAuTresor
         {
 
             int nbMines = rng.Next(grille.GetLength(0) / 2, grille.GetLength(0) * grille.GetLength(1) / 2 + 1); // + 1 car on veut la moitié pile du tableau et pas la moitié - 1
-            
+
             int[,] positionsMines = new int[nbMines, 2];
             /* matrice des positions des mines 
              * |x1,y1| 1ere mine
@@ -308,7 +307,7 @@ namespace ChasseAuTresor
         static void Jouer(string[,] grille, int[,] positionsMines, int[,] positionsTresors, ref int compteurTours, int ligne, int colonne, int[,] verification)
         // Demande au joueur de jouer un coup et le joue
         {
-            
+
             bool lost = EstPerdue(ligne, colonne, grille, positionsMines);
             bool win = EstGagnee(positionsMines, grille, compteurTours);
 
@@ -324,7 +323,7 @@ namespace ChasseAuTresor
                     ans = Console.ReadLine();
                     colonne = int.Parse(ans) - 1;
 
-                } while (ligne < 0 || ligne >= grille.GetLength(0) || colonne < 0 || colonne >= grille.GetLength(1)) ;
+                } while (ligne < 0 || ligne >= grille.GetLength(0) || colonne < 0 || colonne >= grille.GetLength(1));
             }
 
             Recursivite(grille, positionsMines, positionsTresors, ref compteurTours, ligne, colonne, verification);
