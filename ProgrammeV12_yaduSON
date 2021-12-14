@@ -10,8 +10,6 @@ using System.Media;
 
 namespace ChasseAuTresor
 {
-
-
     class Program
     {
         //création du dictionnaire pour éviter erreurs de frappes lors d'indication de lignes / colonnes
@@ -31,6 +29,7 @@ namespace ChasseAuTresor
         static void Run()
         // Sert de fonction Main pouvant être appelée pour recommencer.
         {
+            
             Random rng = new Random(); // définir la variable random
             Console.WriteLine(@" _____ _                           ___          _                            
 /  __ \ |                         / _ \        | |                           
@@ -42,7 +41,7 @@ namespace ChasseAuTresor
 
                                                                              ");
             int compteurTours = 1;
-            string[,] grille = Initialiser( rng); //initialise la grille de jeu
+            string[,] grille = Initialiser(rng); //initialise la grille de jeu
             Console.WriteLine($" Tour n°{compteurTours}");
             int[,] verification = InitialiserVerif(grille); //Initialise une grille utile à la fonction Recursivité (case déjà vérifiée)
 
@@ -98,58 +97,6 @@ namespace ChasseAuTresor
             return grille;
         }
 
-        static void AnimerDepartJeu(Random rng)
-            //petite animation d'écriture avec fausse erreur pouvant apparaître
-        {
-            Console.Write(@"
-
-
-                                        ");
-            string phrase = @"Création de la grille de jeu";
-            System.Media.SoundPlayer playerTyping = new System.Media.SoundPlayer(Properties.Resources.typing);
-            playerTyping.Play();
-
-            for (int i = 0; i < phrase.Length; i++)
-            { 
-                Console.Write(phrase[i]);
-                System.Threading.Thread.Sleep(50);
-            }
-            // Trois points de suspension ...
-            System.Threading.Thread.Sleep(1000);
-            Console.Write(".");
-            System.Threading.Thread.Sleep(1000);
-            Console.Write(".");
-            System.Threading.Thread.Sleep(1000);
-            Console.Write(".");
-            System.Threading.Thread.Sleep(1000);
-
-            //int reboot = rng.Next(0, 6);
-            int reboot = 0;
-            if (reboot == 0) // 1 chance sur 5 de recevoir le message d'erreur.
-            {
-                for (int i = 0; i < phrase.Length + 3; i++)
-                {
-                    Console.Write("\b");
-                }
-                playerTyping.Play();
-                string erreur = @"Erreur de création du plateau.";
-                for (int i = 0; i < erreur.Length; i++)
-                {
-                    Console.Write(erreur[i]);
-                    System.Threading.Thread.Sleep(50);
-                }
-                System.Threading.Thread.Sleep(1000);
-                playerTyping.Play();
-                string nouvelleTentative = @" Nouvelle tentative de création...";
-                for (int i = 0; i < nouvelleTentative.Length; i++)
-                {
-                    Console.Write(nouvelleTentative[i]);
-                    System.Threading.Thread.Sleep(50);
-                }
-                System.Threading.Thread.Sleep(1000);
-            }
-        }
-
         static int[,] InitialiserVerif(string[,] grille)
         /* Demande taille du plateau au joueur 
          * et crée le tableau de la grille "vérification" */
@@ -169,9 +116,8 @@ namespace ChasseAuTresor
         static int[,] PlacerMines(int ligne, int colonne, string[,] grille, Random rng)
         // Place les mines 
         {
-
-            int nbMines = rng.Next(grille.GetLength(0) / 2, grille.GetLength(0) * grille.GetLength(1) / 2 + 1); // + 1 car on veut la moitié pile du tableau et pas la moitié - 1
-
+            //int nbMines = rng.Next(grille.GetLength(0) / 2, grille.GetLength(0) * grille.GetLength(1) / 2 + 1); // + 1 car on veut la moitié pile du tableau et pas la moitié - 1
+            int nbMines = 3;
             int[,] positionsMines = new int[nbMines, 2];
             /* matrice des positions des mines 
              * |x1,y1| 1ere mine
@@ -259,7 +205,6 @@ namespace ChasseAuTresor
         static void Jouer(string[,] grille, int[,] positionsMines, int[,] positionsTresors, ref int compteurTours, int ligne, int colonne, int[,] verification)
         // Demande au joueur de jouer un coup et le joue
         {
-
             bool lost = EstPerdue(ligne, colonne, grille, positionsMines);
             bool win = EstGagnee(positionsMines, grille, compteurTours);
 
@@ -286,12 +231,11 @@ namespace ChasseAuTresor
             // Récupère des indicateurs de partie [Gagnée/Perdue]
             if (lost == true)
             {
-                Console.WriteLine();
-                Console.WriteLine(" BOUMMM  \n Tu es mort !!!");// Si on a le temps récapitulaif de partie : nb de coups et nb de trésors gagnés
-                Console.WriteLine($" Tu as perdu en {compteurTours} tours.");
+                AnimerGameOver(compteurTours);
                 // La partie est finie car la bombe a explosé 
                 Console.WriteLine(" Veux-tu recommencer une partie ? \n O = oui / N = non");
                 char ans = char.Parse(Console.ReadLine().ToLower());
+                Console.ResetColor();
                 if (ans == 'o')
                 {
                     Console.Clear();
@@ -304,6 +248,7 @@ namespace ChasseAuTresor
                         Environment.Exit(0);
                     }
                 }
+
             }
             else
             {
@@ -595,6 +540,8 @@ namespace ChasseAuTresor
                     // Si il y a un item autour, afficher le numéro calculée directement sur la case
                     if (CheckerPositions(ligne, colonne, positionsTresors))
                     {
+                        System.Media.SoundPlayer tresorTrouve = new System.Media.SoundPlayer(Properties.Resources.chestOpening);
+                        tresorTrouve.Play();
                         grille[ligne, colonne] = "  T ";
                     }
                     else
@@ -647,5 +594,80 @@ namespace ChasseAuTresor
             AfficherGrille(grille);
             return win;
         }
+
+
+        // ===== COSMETIQUE ===== //
+
+        static void AnimerDepartJeu(Random rng)
+        //petite animation d'écriture avec fausse erreur pouvant apparaître
+        {
+            Console.Write(@"
+
+
+                                        ");
+            string phrase = @"Création de la grille de jeu";
+            System.Media.SoundPlayer playerTyping = new System.Media.SoundPlayer(Properties.Resources.typing);
+            playerTyping.Play();
+
+            for (int i = 0; i < phrase.Length; i++)
+            {
+                Console.Write(phrase[i]);
+                System.Threading.Thread.Sleep(50);
+            }
+            // Trois points de suspension ...
+            System.Threading.Thread.Sleep(1000);
+            Console.Write(".");
+            System.Threading.Thread.Sleep(1000);
+            Console.Write(".");
+            System.Threading.Thread.Sleep(1000);
+            Console.Write(".");
+            System.Threading.Thread.Sleep(1000);
+
+            int reboot = rng.Next(0, 6);
+            if (reboot == 0) // 1 chance sur 5 de recevoir le message d'erreur.
+            {
+                for (int i = 0; i < phrase.Length + 3; i++)
+                {
+                    Console.Write("\b");
+                }
+                playerTyping.Play();
+                string erreur = @"Erreur de création du plateau.";
+                for (int i = 0; i < erreur.Length; i++)
+                {
+                    Console.Write(erreur[i]);
+                    System.Threading.Thread.Sleep(50);
+                }
+                System.Threading.Thread.Sleep(1000);
+                playerTyping.Play();
+                string nouvelleTentative = @" Nouvelle tentative de création...";
+                for (int i = 0; i < nouvelleTentative.Length; i++)
+                {
+                    Console.Write(nouvelleTentative[i]);
+                    System.Threading.Thread.Sleep(50);
+                }
+                System.Threading.Thread.Sleep(1000);
+            }
+        }
+        static void AnimerGameOver(int compteurTours)
+        {
+            Console.WriteLine();
+            System.Media.SoundPlayer gameOver = new System.Media.SoundPlayer(Properties.Resources.explosion);
+            gameOver.Play();
+
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.WriteLine(@"                                             )                    ");
+            Console.WriteLine(@"             (                            ( /(                    ");
+            Console.WriteLine(@"             )\ )       )     )      (    )\())   )      (   (    ");
+            Console.WriteLine(@"            (()/(    ( /(    (      ))\  ((_)\   /((    ))\  )(   ");
+            Console.WriteLine(@"             /(_))_  )(_))   )\  ' /((_)   ((_) (_))\  /((_)(()\  ");
+            Console.WriteLine(@"            (_)) __|((_)_  _((_)) (_))    / _ \ _)((_)(_))   ((_) ");
+            Console.WriteLine(@"              | (_ |/ _` || '  \()/ -_)  | (_) |\ V / / -_) | '_| ");
+            Console.WriteLine(@"               \___|\__,_||_|_|_| \___|   \___/  \_/  \___| |_|   ");
+            Console.WriteLine(" ");
+            
+            //Console.WriteLine(" BOUMMM  \n Tu es mort !!!");
+            Console.WriteLine($" Tu as perdu en {compteurTours} tours.");
+        }
+
     }
 }
