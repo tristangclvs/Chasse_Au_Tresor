@@ -206,7 +206,7 @@ namespace ChasseAuTresor
         // Demande au joueur de jouer un coup et le joue
         {
             bool lost = EstPerdue(ligne, colonne, grille, positionsMines);
-            bool win = EstGagnee(positionsMines, grille, compteurTours);
+            bool win = EstGagnee(positionsMines, grille);
 
             if (compteurTours != 1 && win != true && lost == false)
             {
@@ -226,7 +226,7 @@ namespace ChasseAuTresor
 
             Recursivite(grille, positionsMines, positionsTresors, ref compteurTours, ligne, colonne, verification);
             lost = EstPerdue(ligne, colonne, grille, positionsMines);
-            win = EstGagnee(positionsMines, grille, compteurTours);
+            win = EstGagnee(positionsMines, grille);
 
             // Récupère des indicateurs de partie [Gagnée/Perdue]
             if (lost == true)
@@ -574,7 +574,7 @@ namespace ChasseAuTresor
         }
 
 
-        static bool EstGagnee(int[,] positionsMines, string[,] grille, int compteurTours)
+        static bool EstGagnee(int[,] positionsMines, string[,] grille)
         // Détecte si le joueur a gagné et arrête la partie
         {
             bool win = false;
